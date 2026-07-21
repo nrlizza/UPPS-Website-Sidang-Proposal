@@ -73,7 +73,10 @@ exports.postLogin = async (req, res) => {
 
   } catch (err) {
     console.error('Login error:', err.response?.data || err.message);
-    const errorMsg = err.response?.data?.error || 'Email atau password salah';
+    let errorMsg = err.response?.data?.error || 'Email atau password salah';
+    if (typeof errorMsg === 'object') {
+      errorMsg = errorMsg.message || JSON.stringify(errorMsg);
+    }
     req.flash('error', errorMsg);
     return res.render('auth/login', {
       title: 'Login - SIKA',

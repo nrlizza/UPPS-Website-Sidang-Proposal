@@ -308,11 +308,7 @@
         jenis: p.jenis_karya || 'Proposal',
         diajukan: p.tanggalDiajukan ? p.tanggalDiajukan.substring(0,10) : '-',
         status: cardStatus,
-        jadwal: p.jadwal && p.jadwal.tanggal ? {
-          tanggal: p.jadwal.tanggal.substring(0,10),
-          jamMulai: p.jadwal.jamMulai,
-          jamSelesai: p.jadwal.jamSelesai
-        } : null,
+        jadwal: p.jadwal,
         penguji: p.jadwal ? p.jadwal.penguji : [],
         teknik: p.jadwal ? p.jadwal.teknik : null,
         detailTeknik: p.jadwal && p.jadwal.teknik === 'online' ? p.jadwal.linkMeeting : (p.jadwal ? p.jadwal.ruang : null),

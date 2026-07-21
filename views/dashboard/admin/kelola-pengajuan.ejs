@@ -648,13 +648,6 @@
     document.querySelectorAll('input[type="date"][name="tanggal"]').forEach(input => {
       input.setAttribute('min', minDateStr);
     });
-      // Set minimal tanggal jadwal sidang ke besok
-    const besok = new Date();
-    besok.setDate(besok.getDate() + 1);
-    const minDateStr = besok.toISOString().split('T')[0];
-    document.querySelectorAll('input[type="date"][name="tanggal"]').forEach(input => {
-      input.setAttribute('min', minDateStr);
-    });
   </script>
 
 </body>

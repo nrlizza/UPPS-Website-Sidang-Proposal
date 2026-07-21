@@ -514,12 +514,22 @@
                 const rdo = document.querySelector(`#formSetujui input[name="teknik"][value="${jadwal.teknik}"]`);
                 if (rdo) { rdo.checked = true; rdo.dispatchEvent(new Event('change')); }
               }
-              if (jadwal.ruang) document.querySelector('#formSetujui input[name="ruang"]').value = jadwal.ruang;
+              if (jadwal.ruang) {
+                document.querySelector('#formSetujui input[name="ruang"]').value = jadwal.ruang;
+              } else {
+                document.querySelector('#formSetujui input[name="ruang"]').value = 'KOSONG!';
+              }
               if (jadwal.linkMeeting) document.querySelector('#formSetujui input[name="link_meeting"]').value = jadwal.linkMeeting;
               
               if (jadwal.penguji && jadwal.penguji.length > 0) {
                 pengujiList.innerHTML = '';
-                jadwal.penguji.forEach(penguji => addPengujiRow(penguji.nama, penguji.peran));
+                jadwal.penguji.forEach(penguji => {
+                  try {
+                    addPengujiRow(penguji.nama, penguji.peran);
+                  } catch(err) {
+                    console.error("Error adding penguji:", err);
+                  }
+                });
               } else {
                 resetPengujiDefault();
               }

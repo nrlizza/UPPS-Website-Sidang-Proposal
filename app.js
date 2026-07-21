@@ -1,6 +1,6 @@
 require('dotenv').config();
 const express = require('express');
-const session = require('express-session');
+const cookieSession = require('cookie-session');
 const flash = require('connect-flash');
 const path = require('path');
 
@@ -15,14 +15,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Session Configuration
-app.use(session({
-  secret: process.env.SESSION_SECRET || 'ap3_secret_key',
-  resave: false,
-  saveUninitialized: false,
-  cookie: {
-    maxAge: 1000 * 60 * 60 * 24 // 1 day
-  }
+// Session Configuration for Vercel (Stateless Cookie)
+app.use(cookieSession({
+  name: 'session',
+  keys: [process.env.SESSION_SECRET || 'ap3_secret_key'],
+  maxAge: 24 * 60 * 60 * 1000 // 24 hours
 }));
 
 // Flash Messages

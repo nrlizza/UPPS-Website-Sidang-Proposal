@@ -539,6 +539,7 @@
         if (jadwalRaw) {
           try {
             const jadwal = JSON.parse(decodeURIComponent(jadwalRaw));
+            console.log("DEBUG JADWAL LOADED:", jadwal);
             if (jadwal.tanggal) document.querySelector('#formSetujui input[name="tanggal"]').value = jadwal.tanggal.split('T')[0];
             if (jadwal.jamMulai) document.querySelector('#formSetujui input[name="jam_mulai"]').value = jadwal.jamMulai;
             if (jadwal.jamSelesai) document.querySelector('#formSetujui input[name="jam_selesai"]').value = jadwal.jamSelesai;
@@ -581,16 +582,18 @@
       const row = document.createElement('div');
       row.className = 'flex items-center gap-2';
       row.innerHTML = `
-        <input type="text" name="penguji_nama[]" value="${nama}" placeholder="Nama dosen penguji" required
+        <input type="text" name="penguji_nama[]" placeholder="Nama dosen penguji" required
           class="flex-1 border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
         <select name="penguji_peran[]" class="border border-gray-300 rounded-lg px-2 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
-          <option value="Ketua" ${peran === 'Ketua' ? 'selected' : ''}>Ketua</option>
-          <option value="Anggota" ${peran === 'Anggota' ? 'selected' : ''}>Anggota</option>
+          <option value="Ketua">Ketua</option>
+          <option value="Anggota">Anggota</option>
         </select>
         <button type="button" class="remove-penguji shrink-0 w-8 h-8 rounded-lg flex items-center justify-center text-gray-400 hover:text-red-500 hover:bg-red-50 transition">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
         </button>
       `;
+      row.querySelector('input[name="penguji_nama[]"]').value = nama;
+      row.querySelector('select[name="penguji_peran[]"]').value = peran;
       row.querySelector('.remove-penguji').addEventListener('click', () => row.remove());
       pengujiList.appendChild(row);
     }

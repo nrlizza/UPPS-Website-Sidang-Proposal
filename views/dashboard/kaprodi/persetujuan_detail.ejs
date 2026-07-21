@@ -109,7 +109,7 @@
               </div>
               <div class="rounded-xl overflow-hidden" style="border: 1px solid #dbe4f0; background: #f8fafc;">
                 <% const rows = [
-                  ['Jenis Sidang', pengajuan.jenisSidangLabel],
+                  ['Jenis Sidang', (pengajuan.jenis_karya || 'Seminar Proposal')],
                   ['Nama', pengajuan.nama],
                   ['NIM', pengajuan.nim],
                   ['Program Studi', pengajuan.program_studi],
@@ -139,7 +139,7 @@
               </div>
               <div class="flex flex-wrap gap-2">
                 <% if (pengajuan.file_draft_karya_akhir) { %>
-                  <a href="<%= backendBaseUrl %>/<%= pengajuan.file_draft_karya_akhir.replace(/\\/g, '/') %>" target="_blank" class="flex items-center gap-2 text-xs font-medium text-gray-600 bg-gray-50 hover:bg-gray-100 border border-gray-200 rounded-lg px-3 py-1.5 transition">
+                  <a href="<%= pengajuan.file_draft_karya_akhir.startsWith('http') ? pengajuan.file_draft_karya_akhir : backendBaseUrl + '/' + pengajuan.file_draft_karya_akhir.replace(/\\/g, '/') %>" target="_blank" class="flex items-center gap-2 text-xs font-medium text-gray-600 bg-gray-50 hover:bg-gray-100 border border-gray-200 rounded-lg px-3 py-1.5 transition">
                     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
                     Draft Karya Akhir
                   </a>

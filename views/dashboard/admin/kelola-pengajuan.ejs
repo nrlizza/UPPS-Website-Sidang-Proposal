@@ -4,7 +4,21 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Kelola Pengajuan - PPSU</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.tailwindcss.com">    // Set minimal tanggal jadwal sidang ke besok
+    const besok = new Date();
+    besok.setDate(besok.getDate() + 1);
+    const minDateStr = besok.toISOString().split('T')[0];
+    document.querySelectorAll('input[type="date"][name="tanggal"]').forEach(input => {
+      input.setAttribute('min', minDateStr);
+    });
+      // Set minimal tanggal jadwal sidang ke besok
+    const besok = new Date();
+    besok.setDate(besok.getDate() + 1);
+    const minDateStr = besok.toISOString().split('T')[0];
+    document.querySelectorAll('input[type="date"][name="tanggal"]').forEach(input => {
+      input.setAttribute('min', minDateStr);
+    });
+  </script>
   <style>
     .status-badge {
       display: inline-flex; align-items: center; gap: 0.3rem;
@@ -226,7 +240,7 @@
                     <!-- Lampiran -->
                     <div class="flex flex-wrap gap-2 mt-4">
                       <% if (p.file_draft_karya_akhir) { %>
-                        <a href="<%= backendBaseUrl %>/<%= p.file_draft_karya_akhir.replace(/\\/g, '/') %>" target="_blank" class="flex items-center gap-2 text-xs font-medium text-gray-600 bg-gray-50 hover:bg-gray-100 border border-gray-200 rounded-lg px-3 py-1.5 transition">
+                        <a href="<%= p.file_draft_karya_akhir.startsWith('http') ? p.file_draft_karya_akhir : backendBaseUrl + '/' + p.file_draft_karya_akhir.replace(/\\/g, '/') %>" target="_blank" class="flex items-center gap-2 text-xs font-medium text-gray-600 bg-gray-50 hover:bg-gray-100 border border-gray-200 rounded-lg px-3 py-1.5 transition">
                           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
                           Draft Karya Akhir
                         </a>
@@ -627,6 +641,20 @@
     if (filterProdi) filterProdi.addEventListener('change', applyFilters);
 
     updateStats();
+      // Set minimal tanggal jadwal sidang ke besok
+    const besok = new Date();
+    besok.setDate(besok.getDate() + 1);
+    const minDateStr = besok.toISOString().split('T')[0];
+    document.querySelectorAll('input[type="date"][name="tanggal"]').forEach(input => {
+      input.setAttribute('min', minDateStr);
+    });
+      // Set minimal tanggal jadwal sidang ke besok
+    const besok = new Date();
+    besok.setDate(besok.getDate() + 1);
+    const minDateStr = besok.toISOString().split('T')[0];
+    document.querySelectorAll('input[type="date"][name="tanggal"]').forEach(input => {
+      input.setAttribute('min', minDateStr);
+    });
   </script>
 
 </body>

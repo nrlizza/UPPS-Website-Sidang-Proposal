@@ -55,7 +55,12 @@ app.use((err, req, res, next) => {
 });
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`🚀 Frontend running on http://localhost:${PORT}`);
-  console.log(`🔗 Backend API: ${process.env.BACKEND_URL || 'http://localhost:5000/api'}`);
-});
+
+if (require.main === module) {
+  app.listen(PORT, () => {
+    console.log(`🚀 Frontend running on http://localhost:${PORT}`);
+    console.log(`🔗 Backend API: ${process.env.BACKEND_URL || 'http://localhost:5000/api'}`);
+  });
+}
+
+module.exports = app;

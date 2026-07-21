@@ -170,6 +170,16 @@ router.post('/admin/kelola-pengajuan/:id/tolak', isAuthenticated, isRole(['admin
   }
 });
 
+// Delete Pengajuan (Admin)
+router.delete('/admin/kelola-pengajuan/:id', isAuthenticated, isRole(['admin']), async (req, res) => {
+  try {
+    await axios.delete(`${BACKEND_URL}/proposal/${req.params.id}`, getAxiosConfig(req));
+    res.json({ success: true });
+  } catch (error) {
+    res.status(500).json({ error: error.response?.data?.error || 'Terjadi kesalahan' });
+  }
+});
+
 // ============ DOSEN PEMBIMBING ROUTES ============
 
 // Dashboard Dosen Pembimbing

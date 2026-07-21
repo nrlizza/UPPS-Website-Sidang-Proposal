@@ -72,7 +72,7 @@
         </p>
       <% } %>
 
-      <form id="pengajuanForm" action="/dashboard/pemohon/pengajuan/baru/detail" method="POST" enctype="multipart/form-data" class="bg-white rounded-xl border border-gray-200 overflow-hidden shadow-sm">
+      <form id="pengajuanForm" class="bg-white rounded-xl border border-gray-200 overflow-hidden shadow-sm">
         
         <!-- =================== STEP 1: DATA PENDAFTARAN =================== -->
         <div id="step1" class="step-content active">
@@ -521,10 +521,41 @@
     }
 
     // Submit handler
-    form.addEventListener('submit', () => {
-      document.getElementById('submitBtn').disabled = true;
-      document.getElementById('submitBtnText').textContent = 'Mengirim...';
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const submitBtn = document.getElementById('submitBtn');
+      const submitBtnText = document.getElementById('submitBtnText');
+      
+      submitBtn.disabled = true;
+      submitBtnText.textContent = 'Mengirim...';
       sessionStorage.removeItem('pengajuan_sidang_step1'); // clear legacy state
+      
+      const formData = new FormData(form);
+      const backendCookie = "<%= user.backendCookie || '' %>";
+      const backendUrl = "<%= locals.backendBaseUrl ? backendBaseUrl : 'http://localhost:5000' %>/api/proposal";
+      
+      try {
+        const response = await fetch(backendUrl, {
+          method: 'POST',
+          headers: {
+            'x-backend-cookie': backendCookie
+          },
+          body: formData
+        });
+
+        const result = await response.json();
+
+        if (response.ok && result.success) {
+          window.location.href = '/dashboard/pemohon/data-management?success=1';
+        } else {
+          throw new Error(result.error || 'Terjadi kesalahan saat mengirim pengajuan.');
+        }
+      } catch (err) {
+        alert('Gagal mengirim pengajuan: ' + err.message);
+        submitBtn.disabled = false;
+        submitBtnText.textContent = 'Kirim Pengajuan';
+      }
     });
 
     document.getElementById('saveCloseBtn').addEventListener('click', () => {

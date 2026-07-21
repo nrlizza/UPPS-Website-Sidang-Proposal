@@ -55,6 +55,11 @@
               <%= error_msg %>
             </p>
           <% } %>
+          <% if (locals.error && error.length > 0) { %>
+            <p class="text-red-500 text-xs bg-red-50 border border-red-200 rounded-lg px-3 py-2 mb-4">
+              <%= error %>
+            </p>
+          <% } %>
 
           <!-- Form -->
           <form action="/login" method="POST" id="loginForm" class="space-y-4">

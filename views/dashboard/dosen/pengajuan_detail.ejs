@@ -76,7 +76,7 @@
                 </span>
                 <div class="flex-1 min-w-0 pt-0.5">
                   <p class="text-[11px] font-semibold uppercase tracking-wide" style="color:#7c8aa5;">Jenis Sidang</p>
-                  <p class="text-sm font-medium text-gray-800 mt-0.5"><%= pengajuan.jenisSidangLabel %></p>
+                  <p class="text-sm font-medium text-gray-800 mt-0.5"><%= pengajuan.jenis_karya || 'Seminar Proposal' %></p>
                 </div>
               </div>
               <div class="flex items-start gap-3 px-4 py-3 border-b" style="border-color:#e6ecf5;">
@@ -127,7 +127,7 @@
               <p class="text-sm font-bold text-gray-800">Lampiran Dokumen</p>
             </div>
             <% if (pengajuan.file_draft_karya_akhir) { %>
-              <a href="<%= backendBaseUrl %>/<%= pengajuan.file_draft_karya_akhir.replace(/\\/g, '/') %>" target="_blank" class="flex items-center gap-2 text-xs font-medium text-gray-600 bg-gray-50 hover:bg-gray-100 border border-gray-200 rounded-lg px-3 py-2 transition w-fit mb-2">
+              <a href="<%= pengajuan.file_draft_karya_akhir.startsWith('http') ? pengajuan.file_draft_karya_akhir : backendBaseUrl + '/' + pengajuan.file_draft_karya_akhir.replace(/\\/g, '/') %>" target="_blank" class="flex items-center gap-2 text-xs font-medium text-gray-600 bg-gray-50 hover:bg-gray-100 border border-gray-200 rounded-lg px-3 py-2 transition w-fit mb-2">
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
                 Draft Karya Akhir
               </a>

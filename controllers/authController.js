@@ -21,7 +21,7 @@ exports.getLogin = (req, res) => {
   }
   res.render('auth/login', {
     title: 'Login - SIKA',
-    error: req.flash('error'),
+    error: res.locals.error,
     email: ''
   });
 };

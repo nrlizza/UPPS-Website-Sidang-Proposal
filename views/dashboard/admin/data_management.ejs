@@ -268,6 +268,24 @@
     </div>
   </div>
 
+  <!-- ══════════ MODAL: KONFIRMASI HAPUS ══════════ -->
+  <div class="modal-overlay" id="modalHapus">
+    <div class="modal-box bg-white rounded-2xl shadow-xl w-full max-w-sm overflow-hidden text-center p-6">
+      <div class="w-16 h-16 rounded-full bg-red-50 text-red-500 mx-auto flex items-center justify-center mb-4">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 6h18"></path>
+          <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+        </svg>
+      </div>
+      <h3 class="text-lg font-bold text-gray-800 mb-2">Hapus Pengajuan?</h3>
+      <p class="text-sm text-gray-500 mb-6">Apakah Anda yakin ingin menghapus pengajuan ini beserta file draft-nya secara permanen? Data yang dihapus tidak bisa dikembalikan.</p>
+      <div class="flex gap-3">
+        <button type="button" class="modal-close flex-1 px-4 py-2.5 rounded-xl border border-gray-300 text-gray-700 font-semibold text-sm hover:bg-gray-50 transition" data-modal="modalHapus">Batal</button>
+        <button type="button" id="btnConfirmDelete" class="flex-1 px-4 py-2.5 rounded-xl bg-red-600 hover:bg-red-700 text-white font-semibold text-sm transition shadow-sm shadow-red-200">Ya, Hapus</button>
+      </div>
+    </div>
+  </div>
+
   <script>
     // ═══════════════════════════════════════════════════════
     // DATA SUMBER — ganti dengan data dari server (EJS locals)
@@ -411,15 +429,18 @@
           }
 
           let aksiBtn = `
-            <div class="flex flex-col items-center gap-1.5">
-              <button type="button" class="btn-detail text-xs font-semibold text-blue-600 hover:text-blue-700 hover:underline" data-id="${d.id}">
-                Lihat Detail
+            <div class="flex items-center justify-center gap-2">
+              <button type="button" title="Lihat Detail" class="btn-detail p-1.5 bg-blue-50 hover:bg-blue-100 border border-blue-100 text-blue-600 rounded-lg transition shadow-sm" data-id="${d.id}">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
               </button>
-              ${(d.status === 'terjadwal' || d.status === 'selesai') && !isJadwalExpired ? `
-                <button type="button" class="btn-edit-jadwal px-3 py-1 bg-white hover:bg-blue-50 border border-blue-200 rounded-lg text-[11px] font-semibold text-blue-700 transition flex items-center justify-center gap-1 w-full" data-id="${d.id}" data-jadwal="${encodeURIComponent(JSON.stringify(d.jadwal || {}))}" data-judul="${encodeURIComponent(d.judul)}">
-                  Edit Jadwal
+              ${(d.status === 'terjadwal' || d.status === 'selesai' || d.status === 'ditolak') && !isJadwalExpired ? `
+                <button type="button" title="Edit Jadwal" class="btn-edit-jadwal p-1.5 bg-indigo-50 hover:bg-indigo-100 border border-indigo-100 text-indigo-600 rounded-lg transition shadow-sm" data-id="${d.id}" data-jadwal="${encodeURIComponent(JSON.stringify(d.jadwal || {}))}" data-judul="${encodeURIComponent(d.judul)}">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
                 </button>
               ` : ''}
+              <button type="button" title="Hapus" class="btn-delete-proposal p-1.5 bg-red-50 hover:bg-red-100 border border-red-100 text-red-600 rounded-lg transition shadow-sm" data-id="${d.id}">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"></path><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+              </button>
             </div>
           `;
 
@@ -508,6 +529,43 @@
           openModal('modalSetujui');
         });
       });
+
+      let proposalIdToDelete = null;
+      document.querySelectorAll('.btn-delete-proposal').forEach(btn => {
+        btn.addEventListener('click', () => {
+          proposalIdToDelete = btn.getAttribute('data-id');
+          openModal('modalHapus');
+        });
+      });
+      
+      const btnConfirmDelete = document.getElementById('btnConfirmDelete');
+      if (btnConfirmDelete) {
+        btnConfirmDelete.addEventListener('click', async () => {
+          if (!proposalIdToDelete) return;
+          try {
+            btnConfirmDelete.innerHTML = 'Menghapus...';
+            btnConfirmDelete.disabled = true;
+
+            const response = await fetch(`/dashboard/admin/kelola-pengajuan/${proposalIdToDelete}`, {
+              method: 'DELETE'
+            });
+
+            if (response.ok) {
+              window.location.reload(); 
+            } else {
+              const err = await response.json();
+              alert('Gagal menghapus: ' + (err.error || err.message));
+              btnConfirmDelete.innerHTML = 'Ya, Hapus';
+              btnConfirmDelete.disabled = false;
+            }
+          } catch(e) {
+            console.error(e);
+            alert('Terjadi kesalahan pada server');
+            btnConfirmDelete.innerHTML = 'Ya, Hapus';
+            btnConfirmDelete.disabled = false;
+          }
+        });
+      }
     }
 
     // ── Toggle field offline/online ──
@@ -671,6 +729,14 @@
     populateProdiFilter();
     renderStats();
     renderTable();
+    
+    // Set minimal tanggal jadwal sidang ke besok
+    const besok = new Date();
+    besok.setDate(besok.getDate() + 1);
+    const minDateStr = besok.toISOString().split('T')[0];
+    document.querySelectorAll('input[type="date"][name="tanggal"]').forEach(input => {
+      input.setAttribute('min', minDateStr);
+    });
   </script>
 
 </body>

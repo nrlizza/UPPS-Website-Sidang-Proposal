@@ -87,94 +87,79 @@
       </div>
     </section>
     <!-- ─── FOOTER ─── -->
-    <footer style="background-color: #1a56b0;">
+    <footer style="background-color: #0c2f5e;">
+
+      <!-- Aksen garis atas -->
+      <div style="height: 3px; background: linear-gradient(90deg, #1a56b0 0%, #eab308 50%, #1a56b0 100%);"></div>
 
       <!-- Main footer -->
-      <div class="flex items-stretch flex-col md:flex-row">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6" style="padding: 28px 44px 24px;">
 
-        <!-- Kiri — konten footer -->
-        <div class="flex-1 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-10" style="padding: 44px 40px 36px;">
+        <!-- Kantor Pusat -->
+        <div>
+          <p class="font-bold text-white text-xs mb-2 tracking-wide" style="letter-spacing: 0.03em;">Kantor Pusat</p>
+          <p class="text-xs leading-relaxed" style="color: #93b8e8;">
+            Universitas Paramadina<br>
+            Jl. Gatot Subroto Kav. 97,<br>
+            Mampang Prapatan<br>
+            Jakarta Selatan 12790
+          </p>
+        </div>
 
-          <!-- Kantor Pusat -->
-          <div>
-            <p class="font-bold text-white text-sm mb-2">Kantor Pusat</p>
-            <p class="text-xs leading-relaxed" style="color: #bfdbfe;">
-              Universitas Paramadina<br>
-              Jl. Gatot Subroto Kav. 97,<br>
-              Mampang Prapatan<br>
-              Jakarta Selatan 12790
-            </p>
+        <!-- Kontak -->
+        <div>
+          <p class="font-bold text-white text-xs mb-2 tracking-wide" style="letter-spacing: 0.03em;">Kontak</p>
+          <div class="flex items-center gap-2 text-xs mb-1.5" style="color: #93b8e8;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#eab308" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"></path>
+            </svg>
+            <span>+62 21 7918 9000</span>
           </div>
-
-          <!-- Kontak -->
-          <div>
-            <p class="font-bold text-white text-sm mb-3">Kontak</p>
-            <div class="flex items-center gap-2 text-xs mb-2" style="color: #bfdbfe;">
-              <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"></path>
-              </svg>
-              <span>+62 21 7918 9000</span>
-            </div>
-            <div class="flex items-center gap-2 text-xs" style="color: #bfdbfe;">
-              <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="6 9 6 2 18 2 18 9"></polyline>
-                <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
-                <rect x="6" y="14" width="12" height="8"></rect>
-              </svg>
-              <span>+62 21 7918 9001</span>
-            </div>
-          </div>
-
-          <!-- Informasi -->
-          <div>
-            <p class="font-bold text-white text-sm mb-3">Informasi</p>
-            <a href="#" class="block text-xs mb-2 hover:text-white transition" style="color: #bfdbfe;">Tentang PPSU</a>
-            <a href="#" class="block text-xs mb-2 hover:text-white transition" style="color: #bfdbfe;">Panduan Pengguna</a>
-            <a href="#" class="block text-xs mb-2 hover:text-white transition" style="color: #bfdbfe;">FAQ</a>
-          </div>
-
-          <!-- Layanan -->
-          <div>
-            <p class="font-bold text-white text-sm mb-3">Layanan</p>
-            <a href="#" class="block text-xs mb-2 hover:text-white transition" style="color: #bfdbfe;">Sidang Seminar Proposal</a>
-            <a href="#" class="block text-xs mb-2 hover:text-white transition" style="color: #bfdbfe;">Sidang Kolokium</a>
-            <a href="#" class="block text-xs mb-2 hover:text-white transition" style="color: #bfdbfe;">Status Pengajuan</a>
-          </div>
-
-          <!-- Dukungan -->
-          <div>
-            <p class="font-bold text-white text-sm mb-3">Dukungan</p>
-            <a href="mailto:ppsu@paramadina.ac.id" class="block text-xs mb-2 hover:text-white transition" style="color: #bfdbfe; word-break: break-all;">ppsu@paramadina.ac.id</a>
-            <a href="#" class="block text-xs mb-2 hover:text-white transition" style="color: #bfdbfe;">Hubungi Kami</a>
-            <a href="#" class="block text-xs mb-2 hover:text-white transition" style="color: #bfdbfe;">Kebijakan Privasi</a>
+          <div class="flex items-center gap-2 text-xs" style="color: #93b8e8;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#eab308" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;">
+              <polyline points="6 9 6 2 18 2 18 9"></polyline>
+              <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+              <rect x="6" y="14" width="12" height="8"></rect>
+            </svg>
+            <span>+62 21 7918 9001</span>
           </div>
         </div>
 
-        <!-- Kanan — kotak logo -->
-        <div class="flex items-center justify-center" style="background-color: #005FA2; min-width: 220px; padding: 40px 32px;">
-          <img
-            src="/images/paramadinalogo-white.svg"
-            alt="Universitas Paramadina"
-            style="width: 160px; object-fit: contain;"
-            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
-          >
-          <div style="display: none; flex-direction: column; align-items: center; gap: 8px; color: #fff;">
-            <span style="font-weight: 900; font-size: 1.5rem; letter-spacing: 2px;">UP</span>
-            <span style="font-weight: 700; font-size: 0.85rem; letter-spacing: 1px; text-align: center;">UNIVERSITAS PARAMADINA</span>
-          </div>
+        <!-- Informasi -->
+        <div>
+          <p class="font-bold text-white text-xs mb-2 tracking-wide" style="letter-spacing: 0.03em;">Informasi</p>
+          <a href="#" class="inline-block text-xs mb-1.5 transition" style="color: #93b8e8; border-bottom: 1px solid transparent;" onmouseover="this.style.color='#fff'; this.style.borderColor='#eab308'" onmouseout="this.style.color='#93b8e8'; this.style.borderColor='transparent'">Tentang PPSU</a><br>
+          <a href="#" class="inline-block text-xs mb-1.5 transition" style="color: #93b8e8; border-bottom: 1px solid transparent;" onmouseover="this.style.color='#fff'; this.style.borderColor='#eab308'" onmouseout="this.style.color='#93b8e8'; this.style.borderColor='transparent'">Panduan Pengguna</a><br>
+          <a href="#" class="inline-block text-xs mb-1.5 transition" style="color: #93b8e8; border-bottom: 1px solid transparent;" onmouseover="this.style.color='#fff'; this.style.borderColor='#eab308'" onmouseout="this.style.color='#93b8e8'; this.style.borderColor='transparent'">FAQ</a>
         </div>
 
+        <!-- Layanan -->
+        <div>
+          <p class="font-bold text-white text-xs mb-2 tracking-wide" style="letter-spacing: 0.03em;">Layanan</p>
+          <a href="#" class="inline-block text-xs mb-1.5 transition" style="color: #93b8e8; border-bottom: 1px solid transparent;" onmouseover="this.style.color='#fff'; this.style.borderColor='#eab308'" onmouseout="this.style.color='#93b8e8'; this.style.borderColor='transparent'">Sidang Seminar Proposal</a><br>
+          <a href="#" class="inline-block text-xs mb-1.5 transition" style="color: #93b8e8; border-bottom: 1px solid transparent;" onmouseover="this.style.color='#fff'; this.style.borderColor='#eab308'" onmouseout="this.style.color='#93b8e8'; this.style.borderColor='transparent'">Sidang Kolokium</a><br>
+          <a href="#" class="inline-block text-xs mb-1.5 transition" style="color: #93b8e8; border-bottom: 1px solid transparent;" onmouseover="this.style.color='#fff'; this.style.borderColor='#eab308'" onmouseout="this.style.color='#93b8e8'; this.style.borderColor='transparent'">Status Pengajuan</a>
+        </div>
+
+        <!-- Dukungan -->
+        <div>
+          <p class="font-bold text-white text-xs mb-2 tracking-wide" style="letter-spacing: 0.03em;">Dukungan</p>
+          <a href="mailto:ppsu@paramadina.ac.id" class="inline-block text-xs mb-1.5 transition" style="color: #93b8e8; word-break: break-all; border-bottom: 1px solid transparent;" onmouseover="this.style.color='#fff'; this.style.borderColor='#eab308'" onmouseout="this.style.color='#93b8e8'; this.style.borderColor='transparent'">ppsu@paramadina.ac.id</a><br>
+          <a href="#" class="inline-block text-xs mb-1.5 transition" style="color: #93b8e8; border-bottom: 1px solid transparent;" onmouseover="this.style.color='#fff'; this.style.borderColor='#eab308'" onmouseout="this.style.color='#93b8e8'; this.style.borderColor='transparent'">Hubungi Kami</a><br>
+          <a href="#" class="inline-block text-xs mb-1.5 transition" style="color: #93b8e8; border-bottom: 1px solid transparent;" onmouseover="this.style.color='#fff'; this.style.borderColor='#eab308'" onmouseout="this.style.color='#93b8e8'; this.style.borderColor='transparent'">Kebijakan Privasi</a>
+        </div>
       </div>
 
       <!-- Divider -->
-      <div style="border-top: 1px solid rgba(255,255,255,0.15);"></div>
+      <div style="border-top: 1px solid rgba(255,255,255,0.1);"></div>
 
       <!-- Bottom bar -->
-      <div class="flex flex-col sm:flex-row items-center justify-between gap-2" style="padding: 14px 40px;">
-        <p class="text-xs" style="color: #bfdbfe;">
+      <div class="flex flex-col sm:flex-row items-center justify-center sm:justify-between gap-2 text-center" style="padding: 12px 44px;">
+        <p class="text-xs" style="color: #6f96c9;">
           © <%= new Date().getFullYear() %> Universitas Paramadina. Hak Cipta Dilindungi.
         </p>
-        <p class="text-xs" style="color: #bfdbfe;">
+        <p class="text-xs flex items-center gap-2" style="color: #6f96c9;">
+          <span style="width: 4px; height: 4px; border-radius: 50%; background-color: #eab308; display: inline-block;"></span>
           PPSU — Pendaftaran dan Persetujuan Sidang Seminar Proposal/Kolokium
         </p>
       </div>

@@ -65,6 +65,13 @@ router.put(
   controller.rejectByAdmin
 );
 
+router.delete(
+  '/:id',
+  isAuthenticated,
+  hasRole(['admin']),
+  controller.deleteProposalByAdmin
+);
+
 // ============ KAPRODI ============
 router.get(
   '/kaprodi/pending',

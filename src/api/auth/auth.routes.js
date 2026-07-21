@@ -23,7 +23,10 @@ router.get(
   '/google/callback',
   (req, res, next) => {
     passport.authenticate('google', (err, user, info) => {
-      if (err) return next(err);
+      if (err) {
+        const msg = encodeURIComponent(err.message || 'Terjadi kesalahan saat login');
+        return res.redirect(`${process.env.FRONTEND_URL || 'http://localhost:3000'}/login?error=${msg}`);
+      }
       if (!user) {
         const msg = info && info.message ? encodeURIComponent(info.message) : 'Autentikasi gagal';
         return res.redirect(`${process.env.FRONTEND_URL || 'http://localhost:3000'}/login?error=${msg}`);

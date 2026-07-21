@@ -1,6 +1,9 @@
 import * as service from './proposal.service.js';
 import * as userService from '../user/user.service.js';
 import { handleResult } from '../../utils/handleResponse.js';
+import { sendApprovalEmail } from '../../utils/mailer.js';
+import fs from 'fs';
+import path from 'path';
 
 // ============================================
 // 1. MAHASISWA: Buat Pengajuan
@@ -361,6 +364,16 @@ export async function approveKaprodi(req, res, next) {
       'Disetujui'
     );
 
+    // Kirim notifikasi email secara asinkron
+    if (proposal.email && proposal.jadwal) {
+      sendApprovalEmail(
+        proposal.email,
+        proposal.nama,
+        proposal.judul_karya_akhir,
+        proposal.jadwal
+      );
+    }
+
     handleResult(res, result);
   } catch (error) {
     next(error);
@@ -450,6 +463,70 @@ export async function getAllProposals(req, res, next) {
 
     const result = await service.getAllProposals(filter);
     handleResult(res, result);
+  } catch (error) {
+    next(error);
+  }
+}
+
+// ============================================
+// 13. ADMIN: Delete Proposal
+// ============================================
+export async function deleteProposalByAdmin(req, res, next) {
+  try {
+    const { id } = req.params;
+
+    // Ambil data dulu untuk dapatkan path file
+    const proposalResult = await service.getProposalById(id);
+    if (!proposalResult.success) {
+      return res.status(404).json(proposalResult);
+    }
+    const proposal = proposalResult.data;
+
+    // Hapus dari database
+    const deleteResult = await service.deleteProposal(id);
+    if (!deleteResult.success) {
+      return res.status(400).json(deleteResult);
+    }
+
+    // Hapus file draft PDF jika ada
+    if (proposal.file_draft_karya_akhir) {
+      const fileUrl = proposal.file_draft_karya_akhir;
+      try {
+        if (fileUrl.includes('cloudinary.com')) {
+          // Ekstrak public_id dari URL Cloudinary
+          // Contoh URL: https://res.cloudinary.com/cloud_name/image/upload/v123456/upps_drafts/draft-12345.pdf
+          const parts = fileUrl.split('/');
+          const filenameWithExt = parts.pop();
+          const folder = parts.pop();
+          const public_id = `${folder}/${filenameWithExt.split('.')[0]}`;
+
+          if (process.env.CLOUDINARY_CLOUD_NAME) {
+            const { v2: cloudinary } = await import('cloudinary');
+            cloudinary.config({
+              cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+              api_key: process.env.CLOUDINARY_API_KEY,
+              api_secret: process.env.CLOUDINARY_API_SECRET
+            });
+            // Hapus dari Cloudinary
+            await cloudinary.uploader.destroy(public_id, { resource_type: 'image' });
+          }
+        } else {
+          // File lokal
+          const fullPath = path.resolve(fileUrl);
+          if (fs.existsSync(fullPath)) {
+            fs.unlinkSync(fullPath);
+          }
+        }
+      } catch (fileErr) {
+        console.error('Gagal menghapus file draft:', fileErr);
+        // Tetap lanjut meskipun file gagal dihapus
+      }
+    }
+
+    res.json({
+      success: true,
+      message: 'Data pengajuan dan file terkait berhasil dihapus permanen'
+    });
   } catch (error) {
     next(error);
   }

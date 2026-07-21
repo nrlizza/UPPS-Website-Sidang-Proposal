@@ -96,3 +96,12 @@ export async function addLogToProposal(id, action, userId, role, detail = '') {
   const result = await proposal.save();
   return formatResult(result, 'getOne');
 }
+
+// ==================== DELETE ====================
+export async function deleteProposal(id) {
+  const result = await Proposal.findByIdAndDelete(id);
+  if (!result) {
+    return { success: false, message: 'Proposal tidak ditemukan' };
+  }
+  return { success: true, data: result, message: 'Proposal berhasil dihapus' };
+}

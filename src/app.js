@@ -29,7 +29,8 @@ app.use(helmet({
 
 app.use(cors({
   origin: process.env.FRONTEND_URL || 'http://localhost:3000',
-  credentials: true
+  credentials: true,
+  allowedHeaders: ['Content-Type', 'Authorization', 'x-backend-cookie']
 }));
 
 app.use(morgan('dev'));
@@ -40,6 +41,14 @@ app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 app.use('/src/uploads', express.static('src/uploads'));
 
 // ==================== SESSION ====================
+// Intercept custom x-backend-cookie header for direct browser uploads
+app.use((req, res, next) => {
+  if (req.headers['x-backend-cookie']) {
+    req.headers.cookie = req.headers['x-backend-cookie'];
+  }
+  next();
+});
+
 app.use(session({
   name: 'api.sid',
   secret: process.env.SESSION_SECRET || 'default_secret',

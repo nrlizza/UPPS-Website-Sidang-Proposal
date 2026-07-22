@@ -127,7 +127,7 @@ exports.googleSuccess = async (req, res) => {
 
 exports.logout = async (req, res) => {
   try {
-    if (req.session.user && req.session.user.backendCookie) {
+    if (req.session && req.session.user && req.session.user.backendCookie) {
       await axios.get(`${BACKEND_URL}/auth/logout`, {
         headers: { Cookie: req.session.user.backendCookie }
       });
@@ -136,8 +136,7 @@ exports.logout = async (req, res) => {
     console.error('Logout backend error:', err.message);
   }
 
-  req.session.destroy((err) => {
-    if (err) console.error('Logout error:', err);
-    res.redirect('/login');
-  });
+  // Clear session for cookie-session
+  req.session = null;
+  res.redirect('/login');
 };

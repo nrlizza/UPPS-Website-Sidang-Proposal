@@ -88,21 +88,31 @@ exports.postLogin = async (req, res) => {
 
 exports.googleSuccess = async (req, res) => {
   try {
+    let backendCookie = '';
+    
+    // First try to grab the cookie from req.headers.cookie (for localhost)
+    const cookies = req.headers.cookie ? req.headers.cookie.split(';') : [];
+    for (const c of cookies) {
+      if (c.trim().startsWith('api.sid=')) {
+        backendCookie = c.trim();
+      }
+    }
+    
+    // In cross-domain Vercel deploy, we get the SID from the query string
+    if (!backendCookie && req.query.sid) {
+      // req.query.sid is the signed session ID (e.g. s:...)
+      backendCookie = `api.sid=${req.query.sid}`;
+    }
+
     const response = await axios.get(`${BACKEND_URL}/auth/session`, {
-      headers: { Cookie: req.headers.cookie }
+      headers: { 
+        Cookie: backendCookie,
+        'x-session-id': req.query.sid || '' // Send custom header for backend to intercept
+      }
     });
 
     if (response.data.success) {
       const userData = response.data.data;
-      
-      const cookies = req.headers.cookie ? req.headers.cookie.split(';') : [];
-      let backendCookie = '';
-      for (const c of cookies) {
-        if (c.trim().startsWith('api.sid=')) {
-          backendCookie = c.trim();
-        }
-      }
-
       req.session.user = {
         id: userData._id,
         email: userData.email,
